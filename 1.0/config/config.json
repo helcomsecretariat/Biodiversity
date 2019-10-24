@@ -1,0 +1,77 @@
+{
+	"proxyUrl": "proxy/proxy.ashx",
+	"map": {
+		"spatialReference": 3035,
+		"center": {"x": 5717002, "y": 4448448},
+		"extent": {"xmin": 4816667.056376732, "ymin": 3875157.6840125285, "xmax": 6087528.964767217, "ymax": 5834640.369644566},
+		"zoom": 0,
+		"lods": [
+			{"level" : 0, "resolution" : 2645.8386250105837, "scale" : 10000000},
+		  {"level" : 1, "resolution" : 1322.9193125052918, "scale" : 5000000},
+		  {"level" : 2, "resolution" : 529.1677250021168, "scale" : 2000000},
+		  {"level" : 3, "resolution" : 264.5838625010584, "scale" : 1000000},
+		  {"level" : 4, "resolution" : 132.2919312505292, "scale" : 500000},
+		  {"level" : 5, "resolution" : 66.1459656252646, "scale" : 250000},
+		  {"level" : 6, "resolution" : 26.458386250105836, "scale" : 100000},
+		  {"level" : 7, "resolution" : 13.229193125052918, "scale" : 50000}
+		],
+		"basemaps": [
+			{
+				"id": "helcom_borders",
+        "url": "https://maps.helcom.fi/arcgis/rest/services/MADS/Basemap_BORDERS/MapServer",
+        "thumbnail": "BORDERS_basemap.png"
+      },
+      {
+				"id": "helcom_topo",
+        "url": "https://maps.helcom.fi/arcgis/rest/services/MADS/Basemap_TOPO/MapServer",
+        "thumbnail": "TOPO_basemap.png"
+      }
+    ],
+	},
+	"services": {
+		"observations": [
+			{
+				"name": "point",
+				"type": "point",
+				"url": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/0",
+				"resultsTile": "Point observations",
+				"inUse": true
+			},
+			{
+				"name": "grid1x1",
+				"type": "polygon",
+				"url": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/1",
+				"resultsTile": "Grid 1x1 km observations",
+				"inUse": false
+			},
+			{
+				"name": "grid2x2",
+				"type": "polygon",
+				"url": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/2",
+				"resultsTile": "Grid 2x2 km observations",
+				"inUse": false
+			},
+			{
+				"name": "grid5x5",
+				"type": "polygon",
+				"url": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/3",
+				"resultsTile": "Grid 5x5 km observations",
+				"inUse": true
+			},
+			{
+				"name": "grid10x10",
+				"type": "polygon",
+				"url": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/4",
+				"resultsTile": "Grid 10x10 km observations",
+				"inUse": true
+			}
+		],
+		"unique_names": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/7",
+		"unique_groups": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/8",
+		"unique_institutions": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/6",
+		"unique_collections": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/species_for_webapp/MapServer/5",
+		"downloadShp": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/tools_for_webapp/GPServer/Get%20Shapefile/execute?f=pjson",
+		"getStatus": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/tools_for_webapp/GPServer/Get%20status/execute?f=pjson",
+		"projection": "https://maps.helcom.fi/arcgis/rest/services/Utilities/Geometry/GeometryServer/project?f=pjson&outSR=4326"
+	}
+}

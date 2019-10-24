@@ -1,0 +1,59 @@
+<div>
+	<div id="resultInfoContainer">
+		<div style="font-size: 18px;"> Search for species observations </div>
+		<div style="font-size: 12px; color: #444444; margin-top: 10px; margin-bottom: 10px;"> Search filters: </div>
+		<div style="font-size: 14px;">
+			<span>Species name:</span><span style="color: #444444; margin-left: 10px;" data-dojo-attach-point="filter_name"></span>
+		</div>
+		<div style="font-size: 14px;">
+			<span>Observation year From:</span><span style="color: #444444; margin-left: 10px;" data-dojo-attach-point="filter_year1"></span>
+		</div>
+		<div style="font-size: 14px;">
+			<span>Observation year To:</span><span style="color: #444444; margin-left: 10px;" data-dojo-attach-point="filter_year2"></span>
+		</div>
+		<div style="font-size: 14px;">
+			<span>Species groups:</span><span style="color: #444444; margin-left: 10px;" data-dojo-attach-point="filter_groups"></span>
+		</div>
+		<div style="font-size: 14px;">
+			<span>Institutions/data providers:</span><span style="color: #444444; margin-left: 10px;" data-dojo-attach-point="filter_institutions"></span>
+		</div>
+		<div style="font-size: 14px;">
+			<span>Origins of data collection:</span><span style="color: #444444; margin-left: 10px;" data-dojo-attach-point="filter_collections"></span>
+		</div>
+		<div style="font-size: 14px;">
+			<span>Map area:</span><span style="color: #444444; margin-left: 10px;" data-dojo-attach-point="filter_extent"></span>
+		</div>
+
+		<div data-dojo-attach-point="results_container"></div>
+		<!--<div style="display: none; margin-top: 20px;" data-dojo-attach-point="points_results">
+			<div style="font-size: 18px;">Point observations</div>
+			<span style="font-size: 14px;">Total found:</span><span style="color: #444444; font-size: 14px; margin-left: 10px;" data-dojo-attach-point="point_count"></span>
+			<div style="display: none; margin-top: 5px;" data-dojo-attach-point="pointLayerSwitcher">
+				<span style="color: #444444; font-size: 14px;">Show on the map</span>
+				<div style="display: none; color: #444444; font-size: 12px; margin-left: 20px;" data-dojo-attach-point="pointsMaxMessage"> 10000 observations available for preview. </div>
+			</div>
+			<div class="downloadButton" style="display: none; margin-top: 5px;" data-dojo-attach-point="downloadPointsButton">Download Shapefile</div>
+			<div style="display: none; color: #444444; font-size: 12px; margin-left: 20px;" data-dojo-attach-point="pointsDownloadMaxMessage"> Search result dataset is too big to be extracted for download. Please, update your search in order to get downloadable dataset (&lt;100 000 observations) or alternatively download the whole observations dataset as <a href="data/observations_gdb.zip">ESRI Geodatabase (ZIP)</a>. </div>
+		</div>
+
+		<div style="display: none; margin-top: 20px;" data-dojo-attach-point="grid5x5_results">
+			<div style="font-size: 18px;">Grid 5x5km observations</div>
+			<span style="font-size: 14px;">Total found:</span><span style="color: #444444; font-size: 14px; margin-left: 10px;" data-dojo-attach-point="grid5x5_count"></span>
+			<div style="display: none; margin-top: 5px;" data-dojo-attach-point="grid5x5LayerSwitcher">
+				<span style="color: #444444; font-size: 14px;">Show on the map</span>
+				<div style="display: none; color: #444444; font-size: 12px; margin-left: 20px;" data-dojo-attach-point="grid5x5MaxMessage"> 10000 observations available for preview. </div>
+			</div>
+			<div class="downloadButton" style="display: none; margin-top: 5px;" data-dojo-attach-point="downloadGrid5x5Button">Download Shapefile</div>
+			<div style="display: none; color: #444444; font-size: 12px; margin-left: 20px;" data-dojo-attach-point="grid5x5DownloadMaxMessage"> Search result dataset is too big to be extracted for download. Please, update your search in order to get downloadable dataset (&lt;100 000 observations) or alternatively download the whole observations dataset as <a href="data/observations_gdb.zip">ESRI Geodatabase (ZIP)</a>. </div>
+		</div>-->
+
+		<div style="display: none; font-size: 18px; margin-top: 20px;" data-dojo-attach-point="noObservationsMessage">No observations found.</div>
+
+		<div class="searchTaskButton" style="margin-bottom: 10px;" data-dojo-attach-point="updateSearchButton">Update current search</div>
+		<div class="searchTaskButton" style="margin-bottom: 10px; font-weight: bold;" data-dojo-attach-point="newSearchButton">New search</div>
+	</div>
+
+	<!--<div style="margin-top: 20px; clear: both;">
+		Search tipss res
+	</div>-->
+</div>

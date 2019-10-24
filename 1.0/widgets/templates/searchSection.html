@@ -1,0 +1,58 @@
+<div>
+	<div id="searchInfoContainer">
+		<div style="font-size: 18px;"> Search for species observations </div>
+		<div style="font-size: 12px; color: #444444;"> Choose filters below. All filters are optional, any filters combination is allowed and at least one filter should be selected. </div>
+	</div>
+
+	<div>
+		<div class="searchTaskButton" style="margin-bottom: 10px; font-weight: bold;" data-dojo-attach-point="searchButtonTop">Search</div>
+		<div class="searchTaskButton" style="margin-bottom: 10px;"data-dojo-attach-point="clearFiltersButtonTop">Reset filters</div>
+	</div>
+
+	<div id="searchTaskContainer" style="clear: both;">
+		<div id="searchFiltersContainer" style="margin-top: 10px;">
+			<span class="leftPanelLink" data-dojo-attach-point="drawExtentLink">Select map area</span>
+			<span class="leftPanelLink" style="display: none; margin-left: 10px;" data-dojo-attach-point="cancelExtentLink">Cancel</span>
+			<div style="font-size: 12px; color: #444444;"> Specify map area by drawing rectangle. Search will be performed in that area only.</div>
+
+			<div class="inputSection" style="margin-top: 20px;">
+				<input id="speciesNameInput" class="searchInput" data-dojo-attach-point="speciesNameInput"/>
+			</div>
+			<div style="font-size: 12px; color: #444444;"> Start typing species name and then choose one from the list. </div>
+			<div style="display: none; color: #800000" data-dojo-attach-point="speciesNameStatusInfo">
+				<div>
+					<span style="font-size: 12px;">Your selected species name status is </span>
+					<span style="font-weight: bold; font-size: 12px;" data-dojo-attach-point="speciesNameStatus"></span>
+				</div>
+				<div style="display: none;" data-dojo-attach-point="speciesAcceptedNameInfo">
+					<span style="font-size: 12px;">Accepted name of your selected species is </span>
+					<span style="font-weight: bold; font-size: 12px;" data-dojo-attach-point="speciesAcceptedName"></span>
+				</div>
+			</div>
+
+			<div style="font-size: 14px; margin-top: 20px;"> Observations year </div>
+			<div class="inputSection" style="width: 70px; display: inline-block;">
+				<input class="searchInput" style="width: 50px;" placeholder="From" data-dojo-attach-point="obsYear1Input"/>
+			</div>
+			<div class="inputSection" style="width: 70px; display: inline-block;">
+				<input class="searchInput" style="width: 50px;" placeholder="To" data-dojo-attach-point="obsYear2Input"/>
+			</div>
+			<div style="font-size: 12px; color: #444444;"> Input for the year range. If you are searching for a single year, please use the same year in both fields. Leave one field blank if searching for older than or newer than. </div>
+
+			<div class="titlePaneSection" style="margin-top: 20px;" data-dojo-attach-point="speciesGroupSection"></div>
+
+			<div class="titlePaneSection" style="margin-top: 20px;" data-dojo-attach-point="institutionSection"></div>
+
+			<div class="titlePaneSection" style="margin-top: 20px;" data-dojo-attach-point="collectionCodeSection"></div>
+		</div>
+		<div>
+			<div class="searchTaskButton" style="margin-bottom: 10px; font-weight: bold" data-dojo-attach-point="searchButtonBottom">Search</div>
+			<div class="searchTaskButton" style="margin-bottom: 10px;"data-dojo-attach-point="clearFiltersButtonBottom">Reset filters</div>
+		</div>
+	</div>
+
+	<!--<div style="margin-top: 20px; clear: both;">
+		Search tipss res
+	</div>-->
+
+</div>
