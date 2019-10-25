@@ -16,4 +16,4 @@ HELCOM Biodiversity database allows viewing and searching observational data on 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Let us know if you want to use MADS or have any questions at helcom.data@helcom.fi
+Let us know if you have any questions at data@helcom.fi
