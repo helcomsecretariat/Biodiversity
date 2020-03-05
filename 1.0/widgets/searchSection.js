@@ -202,7 +202,10 @@ define([
 				layer.maxMessage = domConstruct.create("div", {"style": "display: none; color: #444444; font-size: 12px; margin-left: 20px;", "innerHTML": "10000 observations available for preview."}, layer.switcher, "last");
 
 				layer.downloadButton = domConstruct.create("div", {"class": "downloadButton", "style": "display: none; margin-top: 5px;", "innerHTML": "Download Shapefile"}, layer.resultsDiv, "last");
-				layer.downloadMaxMessage = domConstruct.create("div", {"style": "display: none; color: #444444; font-size: 12px; margin-left: 20px;", "innerHTML": "Search result dataset is too big to be extracted for download. Please, update your search in order to get downloadable dataset (&lt;100 000 observations) or alternatively download the whole observations dataset as <a href='data/observations_gdb.zip'>ESRI Geodatabase (ZIP)</a>."}, layer.resultsDiv, "last");
+				layer.downloadMaxMessage = domConstruct.create("div", {
+					"style": "display: none; color: #444444; font-size: 12px; margin-left: 20px;",
+					"innerHTML": "Search result dataset is too big to be extracted for download. Please, update your search in order to get downloadable dataset (&lt;100 000 observations) or alternatively download the whole observations dataset as <a href='http://metadata.helcom.fi/geonetwork/srv/eng/resources.get?uuid=16d893d7-f8a6-4e56-a440-8f68d187551a&fname=observations_final.gdb.zip&access=public'>ESRI Geodatabase (ZIP)</a>."
+				}, layer.resultsDiv, "last");
 				on(layer.downloadButton, "click", lang.hitch(this, function() {
 					if (layer.featuresCount > 100000) {
 						layer.downloadMaxMessage.style.display = "block";

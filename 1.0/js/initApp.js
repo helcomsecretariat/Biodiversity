@@ -18,10 +18,6 @@ define([
 		adminView: false,
 		adminLayerList: null,
 		constructor: function() {
-			if (this.isIE()){
-			    alert("We apologize, this browser is not supported.");
-			}
-
 			this.showStartupBox();
 
 			var windowUrl = window.location.pathname;
@@ -37,13 +33,6 @@ define([
 				document.getElementById("screenCover").style.display = "block";
 				document.getElementById("startupBox").style.display = "block";
 			}));
-		},
-
-		isIE: function() {
-			ua = navigator.userAgent;
-			/* MSIE used to detect old browsers and Trident used to newer ones*/
-			var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
-			return is_ie;
 		},
 
 		requestSucceeded: function(response, io) {
