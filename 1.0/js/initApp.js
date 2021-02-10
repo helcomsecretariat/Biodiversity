@@ -36,7 +36,12 @@ define([
 		},
 
 		requestSucceeded: function(response, io) {
-			this.mM = new mapManager({mapNode: "map", mapConfig: response.map, services: response.services});
+			this.mM = new mapManager({
+				mapNode: "map",
+				mapConfig: response.map,
+				services: response.services,
+				fields: response.obsFields
+			});
     },
     requestFailed: function(error, io) {
       console.log("Error. Unable to read application configuration file. Error message: ", error.message);

@@ -16,8 +16,9 @@ define([
 		map: null,
 		leftPane: null,
 		constructor: function(params) {
-			var services = params.services
-			var mapConfig = params.mapConfig;
+			let services = params.services
+			let mapConfig = params.mapConfig;
+			let fields = params.fields;
 
 			this.map = new Map("map", {
         spatialReference: mapConfig.spatialReference,
@@ -59,7 +60,12 @@ define([
 				}
   		});
 
-			this.leftPane = new leftPanel({map: this.map, services: services, mapConfig: mapConfig});
+			this.leftPane = new leftPanel({
+				map: this.map,
+				services: services,
+				mapConfig: mapConfig,
+				fields: fields
+			});
 		},
 
     show: function(open) {

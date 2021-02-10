@@ -38,6 +38,7 @@ define([
 		id: "searchSection",
 		map: null,
 		services: null,
+		fields: null,
 		resultSection: null,
 		pointsQueryTask: null,
 		grids5x5QueryTask: null,
@@ -58,16 +59,15 @@ define([
 		collectionCodeMultiSelect: null,
 		drawTool: null,
 		extentSymbol: null,
-		infoTemplate: null,
 		layers: [],
 		noObservationsFoundCount: 0,
+		obsForTable: [],
 		pointsLayer: null,
 		grid5x5Layer: null,
 		pointSymbol: null,
 		grid5x5Symbol: null,
 		pointsFound: true,
 		grid5x5Found: true,
-		//zoomedToPoints: false,
 		totalCountPoints: 0,
 		totalCountGrid5x5: 0,
 		downloadShpRequested: false,
@@ -88,6 +88,7 @@ define([
 		constructor: function(params) {
 			this.map = params.map;
 			this.services = params.services;
+			this.fields = params.fields;
 			this.resultSection = params.resultSection;
 
 			array.forEach(params.services.observations, lang.hitch(this, function(obsService) {
@@ -141,7 +142,6 @@ define([
 				this.convertCoordinates(evt.geometry);
 			}));
 
-			this.infoTemplate = new InfoTemplate("${scientific_name}", null);
 			this.map.infoWindow.resize(400, 400);
 
 			array.forEach(this.layers, lang.hitch(this, function(layer) {
@@ -149,8 +149,9 @@ define([
 				layer.featuresReceived = false;
 				layer.featuresCount = 0;
 
+				layer.infoTemplate = new InfoTemplate("${scientific_name}", null);
 				layer.graphicsLayer = new GraphicsLayer();
-				layer.graphicsLayer.setInfoTemplate(this.infoTemplate);
+				layer.graphicsLayer.setInfoTemplate(layer.infoTemplate);
 				this.map.addLayer(layer.graphicsLayer);
 
 				layer.symbol = null;
@@ -216,73 +217,6 @@ define([
 				}));
 
 			}));
-
-			//this.pointsQueryTask = new QueryTask(this.services.points.url);
-			//this.grids5x5QueryTask = new QueryTask(this.services.grid5x5.url);
-
-
-			/*this.pointsLayer = new GraphicsLayer();
-      this.pointsLayer.setInfoTemplate(this.infoTemplate);
-      this.map.addLayer(this.pointsLayer);
-
-			this.grid5x5Layer = new GraphicsLayer();
-      this.grid5x5Layer.setInfoTemplate(this.infoTemplate);
-      this.map.addLayer(this.grid5x5Layer);
-
-			this.pointSymbol =  new SimpleMarkerSymbol(
-				SimpleMarkerSymbol.STYLE_CIRCLE,
-				12,
-				new SimpleLineSymbol(
-					SimpleLineSymbol.STYLE_SOLID,
-					new Color([0, 0, 0, 0.9]),
-					1
-				),
-				new Color([0, 0, 0, 0.0])
-			);
-
-			this.grid5x5Symbol = new SimpleFillSymbol(
-				SimpleFillSymbol.STYLE_SOLID,
-				new SimpleLineSymbol(
-					SimpleLineSymbol.STYLE_SOLID,
-					new Color([0,0,0,0.9]),
-					1
-				),
-				new Color([0,0,0,0.0])
-			);*/
-
-
-
-			/*var pointLayerCheckbox = new CheckBox({checked: true});
-			pointLayerCheckbox.placeAt(this.resultSection.pointLayerSwitcher, "first");
-
-			var grid5x5Checkbox = new CheckBox({checked: true});
-			grid5x5Checkbox.placeAt(this.resultSection.grid5x5LayerSwitcher, "first");
-
-			on(pointLayerCheckbox, "change", lang.hitch(this, function(checked) {
-				if (checked) {
-					this.pointsLayer.setVisibility(true);
-				}
-				else {
-					this.pointsLayer.setVisibility(false);
-				}
-			}));
-
-			on(grid5x5Checkbox, "change", lang.hitch(this, function(checked) {
-				if (checked) {
-					this.grid5x5Layer.setVisibility(true);
-				}
-				else {
-					this.grid5x5Layer.setVisibility(false);
-				}
-			}));*/
-
-			/*this.map.on("extent-change", lang.hitch(this, function(ext) {
-				if (this.zoomedToPoints) {
-					console.log(this.map.getZoom());
-					this.map.setZoom(this.map.getZoom()-1);
-					console.log(this.map.getZoom());
-				}
-			}));*/
 		},
 
 		getUniqueFilters: function(speciesGroupTp, institutionTp, collectionCodeTp) {
@@ -367,7 +301,6 @@ define([
 							this.queryFilters.species_groups = this.speciesGroupMultiSelect.get("value");
 						})
 					}, speciesGroupTp.containerNode);
-					//document.getElementById("loadingCover").style.display = "none";
 					this.uniqueDataReceived.groups = true;
 					this.checkIfAllUniqueDataReceived(this.uniqueDataReceived);
       	}),
@@ -667,6 +600,10 @@ define([
 			this.map.graphics.setVisibility(true);
 			this.downloadShpRequested = false;
 
+			this.obsForTable = [];
+			this.resultSection.resTable.resetFilter();
+			this.resultSection.results_table_container.style.display = "none";
+
 			array.forEach(this.layers, lang.hitch(this, function(layer) {
 				layer.resultsDiv.style.display = "none";
 				layer.featuresCountSpan.innerHTML = "";
@@ -677,32 +614,6 @@ define([
 				layer.downloadMaxMessage.style.display = "none";
 				layer.graphicsLayer.clear();
 			}));
-
-			/*this.resultSection.points_results.style.display = "none";
-			this.resultSection.point_count.innerHTML = "";
-			this.resultSection.grid5x5_results.style.display = "none";
-			this.resultSection.grid5x5_count.innerHTML = "";
-
-			this.resultSection.pointLayerSwitcher.style.display = "none";
-			this.resultSection.downloadPointsButton.style.display = "none";
-			this.resultSection.pointsMaxMessage.style.display = "none";
-			this.resultSection.grid5x5LayerSwitcher.style.display = "none";
-			this.resultSection.downloadGrid5x5Button.style.display = "none";
-			this.resultSection.grid5x5MaxMessage.style.display = "none";
-			this.resultSection.pointsDownloadMaxMessage.style.display = "none";
-			this.resultSection.grid5x5DownloadMaxMessage.style.display = "none";
-			this.pointsFound = true;
-			this.grid5x5Found = true;
-			this.mapDataReceived.points = false;
-			this.mapDataReceived.grid5x5 = false;
-			this.pointsLayer.clear();
-			this.grid5x5Layer.clear();*/
-
-			/*this.downloadUrls.points = null;
-			this.downloadUrls.grid5x5 = null;
-			this.totalCountPoints = 0;
-			this.totalCountGrid5x5 = 0;*/
-
 		},
 
 		checkIfAllUniqueDataReceived: function(object) {
@@ -716,11 +627,18 @@ define([
 			document.getElementById("loadingCover").style.display = "none";
 		},
 
-		checkIfAllLayersFeaturesReceived: function() {
+		checkIfAllLayersFeaturesReceived: function(req) {
 			for (var i = 0; i < this.layers.length; i++) {
 				if (!this.layers[i].featuresReceived) {
 					return;
 				}
+			}
+			if (req == "OBS") {
+				if (!this.resultSection.resTable) {
+					this.resultSection.createResultsTable();
+				}
+				this.resultSection.results_table_container.style.display = "block";
+				this.resultSection.resTable.setGridData(this.obsForTable);
 			}
 			document.getElementById("loadingCover").style.display = "none";
 		},
@@ -746,274 +664,82 @@ define([
 							this.resultSection.noObservationsMessage.style.display = "block";
 						}
 						layer.featuresReceived = true;
-						this.checkIfAllLayersFeaturesReceived();
+						this.checkIfAllLayersFeaturesReceived("CNT");
 					}
 				}),
 				lang.hitch(this, function (error) {
 					layer.featuresReceived = true;
-					this.checkIfAllLayersFeaturesReceived();
+					this.checkIfAllLayersFeaturesReceived("CNT");
 					console.log(error);
 					alert("Unable to perform point count request. Contact server administrator.");
 				})
       );
 		},
-
-		/*countPointObservations: function() {
-			var queryCount = new Query();
-			queryCount.where = this.createWhereQuery();
-			var extent = this.queryFilters.extent;
-			if (extent) {
-				queryCount.geometry = new Extent(extent);
-			}
-
-			this.pointsQueryTask.executeForCount(queryCount, lang.hitch(this, function (count) {
-					if (count > 0) {
-						this.resultSection.points_results.style.display = "block";
-						this.resultSection.point_count.innerHTML = count;
-						//this.totalCount = this.totalCount + count;
-						this.totalCountPoints = count;
-						this.createPointsQuery();
-					}
-					else {
-						this.pointsFound = false;
-						if (!this.grid5x5Found) {
-							this.resultSection.noObservationsMessage.style.display = "block";
-						}
-						this.mapDataReceived.points = true;
-						this.checkIfAllDataReceived(this.mapDataReceived);
-						//document.getElementById("loadingCover").style.display = "none";
-					}
-				}),
-				lang.hitch(this, function (error) {
-					this.mapDataReceived.points = true;
-					this.checkIfAllDataReceived(this.mapDataReceived);
-					//document.getElementById("loadingCover").style.display = "none";
-					console.log(error);
-					alert("Unable to perform point count request. Contact server administrator.");
-				})
-      );
-		},
-
-		countGrid5x5Observations: function() {
-
-			var queryCount = new Query();
-			queryCount.where = this.createWhereQuery();
-			var extent = this.queryFilters.extent;
-			if (extent) {
-				queryCount.geometry = new Extent(extent);
-			}
-
-			this.grids5x5QueryTask.executeForCount(queryCount, lang.hitch(this, function (count) {
-					if (count > 0) {
-						this.resultSection.grid5x5_results.style.display = "block";
-						this.resultSection.grid5x5_count.innerHTML = count;
-						//this.totalCount = this.totalCount + count;
-						this.totalCountGrid5x5 = count;
-						this.createGrids5x5Query();
-					}
-					else {
-						this.grid5x5Found = false;
-						if (!this.pointsFound) {
-							this.resultSection.noObservationsMessage.style.display = "block";
-						}
-						this.mapDataReceived.grid5x5 = true;
-						this.checkIfAllDataReceived(this.mapDataReceived);
-						//document.getElementById("loadingCover").style.display = "none";
-					}
-				}),
-				lang.hitch(this, function (error) {
-					this.mapDataReceived.grid5x5 = true;
-					this.checkIfAllDataReceived(this.mapDataReceived);
-					//document.getElementById("loadingCover").style.display = "none";
-					console.log(error);
-					alert("Unable to perform grids5x5 count request. Contact server administrator.");
-				})
-      );
-		},*/
 
 		getFeatures: function(layer) {
-			var extent = this.queryFilters.extent;
-			var query = new Query();
+			let extent = this.queryFilters.extent;
+			let query = new Query();
 			query.returnGeometry = true;
-			query.outFields = ["*"];
 			query.outSpatialReference = this.map.spatialReference;
 			query.where = this.createWhereQuery();
+			query.outFields = ["*"];
 			if (extent) {
 				query.geometry = new Extent(extent);
 			}
-
 			layer.queryTask.execute(query, lang.hitch(this, function (featureSet) {
 					layer.graphicsLayer.clear();
 					if (featureSet.features.length > 0) {
 
-						var infoWindowContent = "<table>";
+						let infoWindowContent = "<table>";
 						array.forEach(featureSet.fields, lang.hitch(this, function(field) {
-							if (field.name == "upload_date") {
-								infoWindowContent = infoWindowContent + "<tr><td>" + field.alias + "</td><td>${" + field.name + ":DateString(local: false, hideTime: true)}</td></tr>";
-							}
-							else {
-								infoWindowContent = infoWindowContent + "<tr><td>" + field.alias + "</td><td>${" + field.name + "}</td></tr>";
+							if (this.fields[field.name]) {
+								if (this.fields[field.name].type) {
+									if (this.fields[field.name].type == "date") {
+										infoWindowContent = infoWindowContent + "<tr><td style='padding: 2px;'>" + this.fields[field.name].alias + "</td><td style='padding: 2px;'>${" + field.name + ":DateString(local: false, hideTime: true)}</td></tr>";
+									}
+									else if (this.fields[field.name].type == "url") {
+										infoWindowContent = infoWindowContent + "<tr><td style='padding: 2px;'>" + this.fields[field.name].alias + "</td><td style='padding: 2px;'><a href='${" + field.name + "}' target='_blank'>${" + field.name + "}</td></tr>";
+									}
+									else if (this.fields[field.name].type == "semicolon") {
+										infoWindowContent = infoWindowContent + "<tr><td style='padding: 2px;'>" + this.fields[field.name].alias + "</td><td style='padding: 2px;'>${" + field.name + "}</td></tr>";
+									}
+								}
+								else {
+									infoWindowContent = infoWindowContent + "<tr><td style='padding: 2px;'>" + this.fields[field.name] + "</td><td style='padding: 2px;'>${" + field.name + "}</td></tr>";
+								}
 							}
 						}));
-						this.infoTemplate.setContent(infoWindowContent);
+						infoWindowContent +="</table>";
+						layer.infoTemplate.setContent(infoWindowContent);
 						layer.switcher.style.display = "block";
 						layer.downloadButton.style.display = "block";
 
-						//console.log(this.map.getScale());
 						this.map.setExtent(graphicsUtils.graphicsExtent(featureSet.features), true);
-						//this.zoomedToPoints = true;
-						//this.map.setZoom(this.map.getZoom()-1);
-						//console.log(this.map.getScale());
 
 						array.forEach(featureSet.features, lang.hitch(this, function(graphic) {
 							graphic.setSymbol(layer.symbol);
 							layer.graphicsLayer.add(graphic);
+							this.obsForTable.push(graphic.attributes);
 						}));
 						if (featureSet.features.length == 10000) {
 							layer.maxMessage.style.display = "block";
 						}
 					}
 					layer.featuresReceived = true;
-					this.checkIfAllLayersFeaturesReceived();
+					this.checkIfAllLayersFeaturesReceived("OBS");
       	}),
       	lang.hitch(this, function (error) {
 					layer.featuresReceived = true;
-					this.checkIfAllLayersFeaturesReceived();
+					this.checkIfAllLayersFeaturesReceived("OBS");
 					console.log(error);
 					alert("Unable to load points data. Contact server administrator.");
 				})
       );
 		},
 
-		/*createPointsQuery: function() {
-			var extent = this.queryFilters.extent;
-			var query = new Query();
-			query.returnGeometry = true;
-			query.outFields = ["*"];
-			query.outSpatialReference = this.map.spatialReference;
-			query.where = this.createWhereQuery();
-			if (extent) {
-				query.geometry = new Extent(extent);
-			}
-
-			this.pointsQueryTask.execute(query, lang.hitch(this, function (featureSet) {
-					this.pointsLayer.clear();
-					if (featureSet.features.length > 0) {
-
-						var infoWindowContent = "<table>";
-						array.forEach(featureSet.fields, lang.hitch(this, function(field) {
-							if (field.name == "upload_date") {
-								infoWindowContent = infoWindowContent + "<tr><td>" + field.alias + "</td><td>${" + field.name + ":DateString(local: false, hideTime: true)}</td></tr>";
-							}
-							else {
-								infoWindowContent = infoWindowContent + "<tr><td>" + field.alias + "</td><td>${" + field.name + "}</td></tr>";
-							}
-						}));
-						this.infoTemplate.setContent(infoWindowContent);
-						this.resultSection.pointLayerSwitcher.style.display = "block";
-						this.resultSection.downloadPointsButton.style.display = "block";
-
-						//console.log(this.map.getScale());
-						this.map.setExtent(graphicsUtils.graphicsExtent(featureSet.features), true);
-						//this.zoomedToPoints = true;
-						//this.map.setZoom(this.map.getZoom()-1);
-						//console.log(this.map.getScale());
-
-						array.forEach(featureSet.features, lang.hitch(this, function(graphic) {
-							graphic.setSymbol(this.pointSymbol);
-							this.pointsLayer.add(graphic);
-						}));
-						if (featureSet.features.length == 10000) {
-							this.resultSection.pointsMaxMessage.style.display = "block";
-						}
-					}
-					this.mapDataReceived.points = true;
-					this.checkIfAllDataReceived(this.mapDataReceived);
-					//this.pointsReceived = true;
-					//if (this.grid5x5Received) {
-					//	document.getElementById("loadingCover").style.display = "none";
-					//}
-      	}),
-      	lang.hitch(this, function (error) {
-					this.mapDataReceived.points = true;
-					this.checkIfAllDataReceived(this.mapDataReceived);
-					//document.getElementById("loadingCover").style.display = "none";
-					console.log(error);
-					alert("Unable to load points data. Contact server administrator.");
-				})
-      );
-		},
-
-		createGrids5x5Query: function() {
-			var extent = this.queryFilters.extent;
-			var query = new Query();
-			query.returnGeometry = true;
-			query.outFields = ["*"];
-			query.outSpatialReference = this.map.spatialReference;
-      query.where = this.createWhereQuery();
-			if (extent) {
-				query.geometry = new Extent(extent);
-			}
-
-			this.grids5x5QueryTask.execute(query, lang.hitch(this, function (featureSet) {
-					this.grid5x5Layer.clear();
-					if (featureSet.features.length > 0) {
-						var infoWindowContent = "<table>";
-						array.forEach(featureSet.fields, lang.hitch(this, function(field) {
-							if (field.name == "upload_date") {
-								console.log(field.name);
-								infoWindowContent = infoWindowContent + "<tr><td>" + field.alias + "</td><td>${" + field.name + ":DateString(local: false, hideTime: true)}</td></tr>";
-							}
-							else {
-								infoWindowContent = infoWindowContent + "<tr><td>" + field.alias + "</td><td>${" + field.name + "}</td></tr>";
-							}
-						}));
-						this.infoTemplate.setContent(infoWindowContent);
-						this.resultSection.grid5x5LayerSwitcher.style.display = "block";
-						this.resultSection.downloadGrid5x5Button.style.display = "block";
-						this.map.setExtent(graphicsUtils.graphicsExtent(featureSet.features), true);
-						array.forEach(featureSet.features, lang.hitch(this, function(graphic) {
-							graphic.setSymbol(this.grid5x5Symbol);
-							this.grid5x5Layer.add(graphic);
-						}));
-						if (featureSet.features.length == 10000) {
-							this.resultSection.grid5x5MaxMessage.style.display = "block";
-						}
-					}
-					this.mapDataReceived.grid5x5 = true;
-					this.checkIfAllDataReceived(this.mapDataReceived);
-
-				}),
-      	lang.hitch(this, function (error) {
-					this.mapDataReceived.grid5x5 = true;
-					this.checkIfAllDataReceived(this.mapDataReceived);
-					//document.getElementById("loadingCover").style.display = "none";
-					console.log(error);
-					alert("Unable to load grid5x5 data. Contact server administrator.");
-				})
-      );
-		},*/
-
-		/*downloadShapeFile: function(dataset) {
-
-			if (!this.downloadShpRequested) {
-				this.downloadShpRequested = true;
-				this.sendDownloadRequest(dataset);
-			}
-			else {
-				if (dataset == "point") {
-					window.location = this.downloadUrls.points;
-				}
-				else if (dataset == "grid5x5") {
-					window.location = this.downloadUrls.grid5x5;
-				}
-			}
-		},*/
-
-		//sendDownloadRequest: function(dataset) {
 		downloadShapeFile: function(layername) {
 			document.getElementById("loadingCover").style.display = "block";
-			var url = this.services.downloadShp;
+			let url = this.services.downloadShp;
 			url = url + "&layer=" + encodeURIComponent(layername);
 			if ((this.queryFilters.species_name != null) && (this.queryFilters.species_name != "")) {
 				url = url + "&name=" + encodeURIComponent(this.queryFilters.species_name);
@@ -1028,7 +754,6 @@ define([
 				url = url + "&group=" + encodeURIComponent(this.queryFilters.species_groups.join(";"));
 			}
 			if ((this.queryFilters.institutions != null) && (this.queryFilters.institutions.length > 0)) {
-				//url = url + "&institution=" + this.queryFilters.institutions.join(";");
 				url = url + "&institution=" + encodeURIComponent(this.queryFilters.institutions.join(";"));
 			}
 			if ((this.queryFilters.collections != null) && (this.queryFilters.collections.length > 0)) {
@@ -1038,9 +763,8 @@ define([
 				url = url + "&xmin=" + encodeURIComponent(this.queryFilters.extent.xmin) + "&ymin=" + encodeURIComponent(this.queryFilters.extent.ymin) + "&xmax=" + encodeURIComponent(this.queryFilters.extent.xmax) + "&ymax=" + encodeURIComponent(this.queryFilters.extent.ymax);
 			}
 			console.log("download", url);
-			//console.log("download encode", encodeURI(url));
 
-			var downloadRequestHandle = esriRequest({
+			let downloadRequestHandle = esriRequest({
 				url: url,
 				handleAs: "json"
 			});
@@ -1052,22 +776,6 @@ define([
 					else {
 						alert("Unable to perform download request. Contact server administrator.");
 					}
-					/*array.forEach(response.results, lang.hitch(this, function(result) {
-						if ((result.paramName == "pointshp") && (result.value)) {
-							this.downloadUrls.points = result.value.url;
-						}
-						if ((result.paramName == "grid5x5shp") && (result.value)) {
-							this.downloadUrls.grid5x5 = result.value.url;
-						}
-					}));
-					if (dataset == "point") {
-						window.location = this.downloadUrls.points;
-					}
-					else if (dataset == "grid5x5") {
-						window.location = this.downloadUrls.grid5x5;
-					}
-
-					console.log("download", response);*/
 					document.getElementById("loadingCover").style.display = "none";
 				}),
 				lang.hitch(this, function (error) {
@@ -1077,6 +785,5 @@ define([
 				})
 			);
 		}
-
 	});
 });

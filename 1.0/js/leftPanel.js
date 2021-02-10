@@ -37,6 +37,7 @@ define([
 		helpSection: null,
 		backgroundInfoSection: null,
 		services: null,
+		fields: null,
 
 		constructor: function(params) {
 			this.map = params.map;
@@ -45,6 +46,7 @@ define([
 			//this.startCenter = this.map.center;
 			//this.startZoom = this.map.getZoom();
 			this.services = params.services;
+			this.fields = params.fields;
 			this.setupSearchTask();
 			this.setupDownloadTask();
 			this.setupBackgroundInfoTask();
@@ -55,8 +57,16 @@ define([
 		setupSearchTask: function() {
 
 			var searchContainer = dom.byId("searchContainer");
-			this.resultsSection = new resultsSection({map: this.map}).placeAt(searchContainer);
-			this.searchSection = new searchSection({map: this.map, services: this.services, resultSection: this.resultsSection}).placeAt(searchContainer);
+			this.resultsSection = new resultsSection({
+				map: this.map,
+				fields: this.fields
+			}).placeAt(searchContainer);
+			this.searchSection = new searchSection({
+				map: this.map,
+				services: this.services,
+				fields: this.fields,
+				resultSection: this.resultsSection
+			}).placeAt(searchContainer);
 
 			on(this.searchSection.searchButtonTop, "click", lang.hitch(this, function() {
 				this.searchButtonClick();
@@ -74,7 +84,7 @@ define([
 				this.searchSection.resetFilters();
 			}));
 
-			on(this.resultsSection.updateSearchButton, "click", lang.hitch(this, function() {
+			on(this.resultsSection.updateSearchButtonTop, "click", lang.hitch(this, function() {
 				this.searchSection.restoreSearch();
 				//this.map.setExtent(this.startExtent, true);
 				//this.map.centerAndZoom(this.startCenter, this.startZoom);
@@ -82,7 +92,24 @@ define([
 				document.getElementById("resultsSection").style.display = "none";
 			}));
 
-			on(this.resultsSection.newSearchButton, "click", lang.hitch(this, function() {
+			on(this.resultsSection.newSearchButtonTop, "click", lang.hitch(this, function() {
+				this.searchSection.restoreSearch();
+				this.searchSection.resetFilters();
+				//this.map.setExtent(this.startExtent, true);
+				//this.map.centerAndZoom(this.startCenter, this.startZoom);
+				document.getElementById("searchSection").style.display = "block";
+				document.getElementById("resultsSection").style.display = "none";
+			}));
+
+			on(this.resultsSection.updateSearchButtonBottom, "click", lang.hitch(this, function() {
+				this.searchSection.restoreSearch();
+				//this.map.setExtent(this.startExtent, true);
+				//this.map.centerAndZoom(this.startCenter, this.startZoom);
+				document.getElementById("searchSection").style.display = "block";
+				document.getElementById("resultsSection").style.display = "none";
+			}));
+
+			on(this.resultsSection.newSearchButtonBottom, "click", lang.hitch(this, function() {
 				this.searchSection.restoreSearch();
 				this.searchSection.resetFilters();
 				//this.map.setExtent(this.startExtent, true);
@@ -117,6 +144,11 @@ define([
 			if (this.searchSection.setFiltersForResultView()) {
 				document.getElementById("loadingCover").style.display = "block";
 				this.map.graphics.setVisibility(false);
+
+				/*this.resultsSection.results_table_container.style.display = "block";
+				if (!this.resultsSection.resTable) {
+					this.resultsSection.createResultsTable();
+				}*/
 
 				array.forEach(this.searchSection.layers, lang.hitch(this, function(layer) {
 					this.searchSection.countObservations(layer);

@@ -73,5 +73,49 @@
 		"downloadShp": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/tools_for_webapp/GPServer/Get%20Shapefile/execute?f=pjson",
 		"getStatus": "https://maps.helcom.fi/arcgis/rest/services/Species_observations/tools_for_webapp/GPServer/Get%20status/execute?f=pjson",
 		"projection": "https://maps.helcom.fi/arcgis/rest/services/Utilities/Geometry/GeometryServer/project?f=pjson&outSR=4326"
+	},
+	"obsFields" : {
+		"scientific_name": "Scientific name",
+		"aphia_id": "Aphia ID",
+		"taxonomical_status": "Taxonomical status",
+		"accepted_name": "Accepted name",
+		"synonyms": {
+			"alias": "Synonyms",
+			"type": "semicolon"
+		},
+		"species_group": "Species group",
+		"data_source": "Data source",
+		"origin_of_data_collection": "Origin of data collection",
+		"subunit": "Subunit",
+		"field_number": "Field number",
+		"decimal_latitude": "Observation latitude",
+		"decimal_longitude": "Observation longitude",
+		"coordinate_uncertainty": "Coordinate uncertainty",
+		"polygon_id_1x1km": "1x1km grid ID",
+		"polygon_id_2x2km": "2x2km grid ID",
+		"polygon_id_5x5km": "5x5km grid ID",
+		"polygon_id_10x10km": "10x10km grid ID",
+		"sampling_group": "Sampling group",
+		"salinity_obs": "Observation salinity",
+		"year_collected": "Year collected",
+		"month_collected": "Month collected",
+		"day_collected": "Day collected",
+		"start_year_collected": "Start year collected",
+		"start_month_collected": "Start month collected",
+		"start_day_collected": "Start day collected",
+		"end_year_collected": "End year collected",
+		"end_month_collected": "End month collected",
+		"end_day_collected": "End day collected",
+		"red_list_assessments": "Red list assessments",
+		"restriction_yes_no": "Restriction",
+		"restriction_description": "Restriction description",
+		"information_withheld": "Information withheld",
+		"data_generalization": "Data generalization",
+		"upload_date": {
+			"alias": "Upload date",
+			"type": "date"
+		},
+		"notes": "Notes",
+		"citation": "Citation"
 	}
 }

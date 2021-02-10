@@ -67,43 +67,6 @@ html, body {
   color: #00AB97;
 }
 
-/*#helcomlogocontainer {
-	background-image: url("../img/HELCOM_logo_white_h40.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 200px;
-	height: 60px;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-#titlecontainer {
-	color: white;
-	font-size: 24pt;
-	font-family: 'Share', cursive;
-	float: left;
-	margin-top: 10px;
-	margin-left: 107px;
-	text-decoration: none;
-	cursor: pointer;
-}*/
-
-/*#widgetscontainer {
-	float: right;
-	margin-top: 19px;
-	margin-right: 50px;
-}
-
-.widgetButton {
-	width: 25px;
-	height: 25px;
-	background-repeat: no-repeat;
-	background-position: center;
-	cursor: pointer;
-	margin-left: 10px;
-	float: right;
-}*/
-
 #linkscontainer {
 	line-height: 50px;
 	float: right;
@@ -467,7 +430,8 @@ html, body {
 /* Layer List widget */
 
 #leftPanelContainer {
-  width: 550px;
+  /*width: 550px;*/
+	width: 40%;
   border-right: 2px solid #00497F;
 }
 
@@ -718,4 +682,76 @@ html, body {
 	font-weight: bold;
 	text-align: center;
 	margin-bottom: 5px;
+}
+
+.dojoxGrid {
+	font-family: "Source Sans Pro", sans-serif;
+	font-size: 14px;
+}
+
+.dojoxGrid .dojoxGridCell {
+	font-family: "Source Sans Pro", sans-serif;
+}
+
+.dojoxGrid .dojoxGridCell .dojoxGridCellOver {
+	background: #FFF;
+}
+
+.dojoxGrid .dojoxGridRowOver .dojoxGridCell {
+	background: #FFF;
+}
+
+.dojoxGrid .dojoxGridRowSelected .dojoxGridCell {
+	background: #FFF;
+}
+
+.claro .dojoxGridCellOver .dojoxGridSortNode {
+	background: transparent;
+}
+
+.claro .dojoxGridHeader .dojoxGridCellOver {
+	background: transparent;
+}
+
+.claro .dojoxGridHeader .dojoxGridCell {
+	background-image: url("../img/filter20.png");
+  background-repeat: no-repeat;
+  background-position: right;
+	cursor: pointer;
+}
+
+.filterIconSelected {
+	background-image: url("../img/filterSelected20.png");
+}
+
+.filterIcon {
+  background-image: url("../img/filter20.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 20px;
+  height: 20px;
+  float: right;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+}
+
+.mainLink {
+	color: rgb(0, 153, 204);
+	cursor: pointer;
+}
+
+.mainLink:hover {
+	text-decoration: underline;
+}
+
+.popupTable {
+  border-collapse: collapse;
+	word-break: break-word;
+}
+
+.popupCell {
+	border: 1px solid #ccc;
+	padding: 2px;
+	width: 50%;
 }
